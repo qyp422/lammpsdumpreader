@@ -3,6 +3,9 @@ lammps dumper文件读取与分析
 ## dumpreader.py 
 class Lammps_dumpreader 用来读取lammpstrj文件 
 
+关于质量的输入如果lammpstrj里面有mass一项则优先使用lammpstrj中的mass
+其次会根据Lammps_dumpreader的m_array参数设置默认值1.0或者自己根据原子类型设置mass。
+
 可选参数m_array若为float值则设置每个原子为固定的质量，若为dict或list需要确保m[typeid]为对应typeid的质量。默认值为1.0 ！
 ## analysis.py
 用来执行分析脚本
