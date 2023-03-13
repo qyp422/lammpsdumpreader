@@ -31,6 +31,7 @@ class Lammps_dumpreader():
         self._component = ['mol','type','q','x','y','z','mass']
         self._dumpid = {}
         self._m_array = m_array
+        self._type_index = {}
 
         if self._update_system_parameter():
             print('Lammps_dumpreader init done!!!!!\n')
@@ -120,6 +121,11 @@ class Lammps_dumpreader():
                 self._system['mol'][i] = int(ls[self._dumpid['mol']])
             if 'type' in self._dumpid:
                 self._system['type'][i] = int(ls[self._dumpid['type']])
+                # make a list of every type for quick union
+                if self._system['type'][i] in self._type_index:
+                    self._type_index[self._system['type'][i]].append(i)
+                else:
+                    self._type_index[self._system['type'][i]] = [i]
             if 'q' in self._dumpid:
                 self._system['q'][i] = float(ls[self._dumpid['q']])
             if 'mass' in self._dumpid:

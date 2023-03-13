@@ -3,7 +3,7 @@ Author: qyp422
 Date: 2023-03-13 12:41:00
 Email: qyp422@qq.com
 LastEditors: Please set LastEditors
-LastEditTime: 2023-03-13 17:23:28
+LastEditTime: 2023-03-13 17:26:48
 Description:  
 
 Copyright (c) 2023 by qyp422, All Rights Reserved. 
@@ -61,6 +61,8 @@ def main():
     while r._read_single_frame(skip = not condition):
     
         if condition:
+            
+
             
             if args.cluster_mid:
                 r.shift_pos([0,0,0])

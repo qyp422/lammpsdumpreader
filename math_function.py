@@ -3,13 +3,13 @@ Author: qyp422
 Date: 2023-03-13 16:03:49
 Email: qyp422@qq.com
 LastEditors: Please set LastEditors
-LastEditTime: 2023-03-13 16:46:57
+LastEditTime: 2023-03-13 20:02:16
 Description: 
 
 Copyright (c) 2023 by qyp422, All Rights Reserved. 
 '''
 import numpy as np
-
+from numba import njit
 #并查集
 class Quick_Find():
     def __init__(self, n):
@@ -66,4 +66,37 @@ class Quick_Find():
         keys_sort =np.argsort(np.array(keys))
         result = [hash1[sort_id[x]] for x in keys_sort]
         return result.reverse()
+
+
+
+'''
+description: 所有的粒子到达某一粒子的距离一定要小于0.5box长度
+            若这些粒子的最左边到最右边超过0.5box长度计算结果将会不准确
+param {*} x x坐标np.array
+param {*} y y坐标np.array
+param {*} z z坐标np.array
+param {*} mass mass坐标np.array
+param {*} box_array
+return {*}
+'''
+def cal_cm_rg(x,y,z,mass,box):
+    n = len(mass)
+    cm0 = np.array([x[0],y[0],z[0]]) #幸运粒子
+    l_box = np.array([box[1] - box[0],box[3] - box[2],box[5] - box[4]],dtype=np.double)
+    cm = np.zeros(3,dtype=np.double)
+    pos = np.zeros((n,3),dtype=np.double)
+    total_mass = np.sum(mass)
+    for i in range(n):
+        pos[i] = np.array([x[i],y[i],z[i]])
+        dr = pos[i]-cm0
+        pos[i] -= l_box * np.rint (dr / l_box) #pos 距离cm0为盒子一半以内
+        cm += pos[i]*mass[i]
+    cm /= total_mass
+
+    rg_sq = 0.0
+    for i in range(n):
+        rg_sq += np.dot(pos[i] - cm,pos[i] - cm)*mass[i]
+    rg_sq /= total_mass
+
+    return cm,np.sqrt(rg_sq)
 
