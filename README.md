@@ -14,8 +14,8 @@ class Lammps_dumpreader 用来读取lammpstrj文件
 ### 可选参数 -r 
 不设置即读取所有帧
 
-若为1个参数即读取帧数为第0帧到end(不括end) eg -r end
+若为1个参数即读取帧数为第0帧到end(包括end) eg -r end
 
-若为2个参数即读取帧数为start帧到end(不括end) eg -r start end
+若为2个参数即读取帧数为start帧到end(包括end) eg -r start end
 
-若为3个参数即读取帧数为start帧到end，每隔step读取一次(不括end) eg -r start end step
+若为3个参数即读取帧数为start帧到end，每隔step读取一次(包括end) eg -r start end step
