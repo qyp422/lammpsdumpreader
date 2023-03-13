@@ -1,7 +1,7 @@
 # lammpsdumpreader
 lammps dumper文件读取与分析
 ## dumpreader.py 
-class Lammps_dumpreader 用来读取lammpstrj文件 
+### class Lammps_dumpreader 用来读取lammpstrj文件 
 
 关于质量的输入如果lammpstrj里面有mass一项则优先使用lammpstrj中的mass
 其次会根据Lammps_dumpreader的m_array参数设置默认值1.0或者自己根据原子类型设置mass。
@@ -30,3 +30,10 @@ class Lammps_dumpreader 用来读取lammpstrj文件
 -o output_filename
 
 输出分析的轨迹，比如做过-bm -cm -r 将会输出用作分析后的轨迹文件,新的轨迹文件名为output_filename。
+
+## math_function.py
+数学计算公式
+### class Quick_Find
+快速并查集并可以按照cluster从大到小输出分组
+### def cal_cm_rg
+计算周期性边界条件下的质心坐标已经回转半径rg
