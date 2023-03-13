@@ -3,7 +3,7 @@ Author: qyp422
 Date: 2022-10-17 15:29:44
 Email: qyp422@qq.com
 LastEditors: Please set LastEditors
-LastEditTime: 2023-03-13 17:19:53
+LastEditTime: 2023-03-13 20:10:06
 
 Description: 
 
@@ -22,6 +22,7 @@ class Lammps_dumpreader():
         self._conf = False
         self.total_atoms = False
         self.box_arr = False
+        self.l_box = False
         try:
             self._conf = open(configuration, "r")
         except:
@@ -44,6 +45,7 @@ class Lammps_dumpreader():
     def __del__(self):
         if self._conf:self._conf.close()
     
+    #读取一帧，可以跳过数据
     def _read_single_frame(self, skip=False):
         line = self._conf.readline()
         if  line == '':
@@ -84,6 +86,7 @@ class Lammps_dumpreader():
         # print(self._system)
         return True
 
+    #初始化系统
     def _update_system_parameter(self):
         line = self._conf.readline()
         if  line == '':
@@ -99,6 +102,7 @@ class Lammps_dumpreader():
         self.box_arr  =  [float(x) for x in self._conf.readline().split()] #x
         self.box_arr  += [float(x) for x in self._conf.readline().split()] #y   
         self.box_arr  += [float(x) for x in self._conf.readline().split()] #z
+        self.l_box = np.array([self.box_arr[1] - self.box_arr[0],self.box_arr[3] - self.box_arr[2],self.box_arr[5] - self.box_arr[4]],dtype=np.double)
         #   ITEM: ATOMS id mol type x y z c_quat[1] c_quat[2] c_quat[3] c_quat[4]
         line = [x for x in self._conf.readline().split()]
         for k in range(2,len(line)):    #0 1 is ITEM: ATOMS
@@ -137,6 +141,7 @@ class Lammps_dumpreader():
         print(f'total_atoms is {self.total_atoms}')
         return True
 
+    #将盒子质心移动至原点
     def box_mid(self):
         print(f'old box array is {self.box_arr}')
         self.box_arr = [-(self.box_arr[1] - self.box_arr[0])/2,(self.box_arr[1] - self.box_arr[0])/2,
@@ -145,6 +150,7 @@ class Lammps_dumpreader():
         print(f'new box array is {self.box_arr}')
         print(' ')
 
+    #返回特定帧数的数据
     def get_frame_system(self,frame_num):
         if frame_num == 0:
             self._read_single_frame(skip = False)
@@ -156,7 +162,7 @@ class Lammps_dumpreader():
         print(f'cannot found {frame_num} th frame! ')
         return False
 
-    #平移shift距离向左为-向右为+
+    #粒子平移shift距离向左为-向右为+ 并根据周期性边界条件放置盒子中
     def shift_pos(self,shift):
         self._system['x']  = self._system['x'] + shift[0] - (self.box_arr[1]+self.box_arr[0])/2
         self._system['x']  = self._system['x']  - np.rint(self._system['x'] /(self.box_arr[1]-self.box_arr[0]))*(self.box_arr[1]-self.box_arr[0]) + (self.box_arr[1]+self.box_arr[0])/2
@@ -167,10 +173,7 @@ class Lammps_dumpreader():
         self._system['z']  = self._system['z'] + shift[2] - (self.box_arr[5]+self.box_arr[4])/2
         self._system['z']  = self._system['z']  - np.rint(self._system['z'] /(self.box_arr[5]-self.box_arr[4]))*(self.box_arr[5]-self.box_arr[4]) + (self.box_arr[5]+self.box_arr[4])/2
 
-
-
-
-
+    #输出lammpstrj文件
     def out_put_lammpstrj(self,opt = ['mol','type','x','y','z']):
         out = ''
         out += 'ITEM: TIMESTEP\n'

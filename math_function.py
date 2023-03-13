@@ -3,13 +3,13 @@ Author: qyp422
 Date: 2023-03-13 16:03:49
 Email: qyp422@qq.com
 LastEditors: Please set LastEditors
-LastEditTime: 2023-03-13 20:02:16
+LastEditTime: 2023-03-13 21:17:18
 Description: 
 
 Copyright (c) 2023 by qyp422, All Rights Reserved. 
 '''
 import numpy as np
-from numba import njit
+from numba import njit,vectorize
 #并查集
 class Quick_Find():
     def __init__(self, n):
@@ -79,10 +79,10 @@ param {*} mass mass坐标np.array
 param {*} box_array
 return {*}
 '''
-def cal_cm_rg(x,y,z,mass,box):
+@njit
+def cal_cm_rg(x,y,z,mass,l_box):
     n = len(mass)
     cm0 = np.array([x[0],y[0],z[0]]) #幸运粒子
-    l_box = np.array([box[1] - box[0],box[3] - box[2],box[5] - box[4]],dtype=np.double)
     cm = np.zeros(3,dtype=np.double)
     pos = np.zeros((n,3),dtype=np.double)
     total_mass = np.sum(mass)
@@ -99,4 +99,28 @@ def cal_cm_rg(x,y,z,mass,box):
     rg_sq /= total_mass
 
     return cm,np.sqrt(rg_sq)
+
+@vectorize
+def dis_sq(a,b,l_box):
+    dx = min(abs(a[0] - b[0]),l_box[0]-abs(a[0] - b[0]))
+    dy = min(abs(a[1] - b[1]),l_box[1]-abs(a[1] - b[1]))
+    dz = min(abs(a[2] - b[2]),l_box[2]-abs(a[2] - b[2]))
+    return dx**2+dy**2+dz**2
+
+'''
+description: 
+param {*} s numpy定义的“结构体”
+param {*} l_box 盒子尺寸
+param {*} num_chain 链条数目
+param {*} num_beads 每条链的珠子数目
+return {*}
+'''
+@njit
+def get_mol_cm_rg(s,l_box,num_chain,num_beads):
+    cm = np.zeros((num_chain,3),dtype=np.double)
+    rg = np.zeros((num_chain,3),dtype=np.double)
+    for j in range(num_chain):
+        cm[j],rg[j] = cal_cm_rg(s['x'][j*num_beads:j*num_beads+num_beads],s['y'][j*num_beads:j*num_beads+num_beads],s['z'][j*num_beads:j*num_beads+num_beads],s['mass'][j*num_beads:j*num_beads+num_beads],l_box)
+    return cm,rg
+
 

@@ -3,7 +3,7 @@ Author: qyp422
 Date: 2023-03-13 12:41:00
 Email: qyp422@qq.com
 LastEditors: Please set LastEditors
-LastEditTime: 2023-03-13 17:26:48
+LastEditTime: 2023-03-13 20:31:16
 Description:  
 
 Copyright (c) 2023 by qyp422, All Rights Reserved. 
@@ -12,6 +12,8 @@ import os,sys,datetime
 import dumpreader as dr
 import argparse
 import math_function as mf
+import numpy as np
+import fus_system as fs
 
 parser = argparse.ArgumentParser()
 parser.add_argument("lammpstrj", help="input full name of .lammpstrj file!")
@@ -61,9 +63,9 @@ def main():
     while r._read_single_frame(skip = not condition):
     
         if condition:
-            
 
-            
+            cm,rg = mf.get_mol_cm_rg(r._system,r.l_box,20,466)
+
             if args.cluster_mid:
                 r.shift_pos([0,0,0])
             if args.output:
