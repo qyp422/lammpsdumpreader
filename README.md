@@ -8,3 +8,5 @@ class Lammps_dumpreader 用来读取lammpstrj文件
 用来执行分析脚本
 
 使用方法为 python analysis.py
+
+可选参数 -bm 将盒子质心移动至[0,0,0]，并没有移动粒子！
