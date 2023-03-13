@@ -37,3 +37,5 @@ lammps dumper文件读取与cluster分析
 快速并查集并可以按照cluster从大到小输出分组
 ### def cal_cm_rg
 计算周期性边界条件下的质心坐标已经回转半径rg
+### dis_sq
+计算两个向量在周期性边界条件下的距离平方
