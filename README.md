@@ -10,7 +10,10 @@ class Lammps_dumpreader 用来读取lammpstrj文件
 使用方法为 python analysis.py lammpstrj文件名字
 
 ### 可选参数 -bm 
-将盒子质心移动至[0,0,0]，并没有移动粒子！
+将盒子质心移动至[0,0,0]，并没有移动粒子！若想粒子也平移请使用shift_pos[0,0,0]!
+### 可选参数 -cm
+将最大的cluster质心移动至盒子质心
+
 ### 可选参数 -r 
 不设置即读取所有帧
 
