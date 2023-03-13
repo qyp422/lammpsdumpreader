@@ -1,5 +1,5 @@
 # lammpsdumpreader
-lammps dumper文件读取与分析
+lammps dumper文件读取与cluster分析
 ## dumpreader.py 
 ### class Lammps_dumpreader 用来读取lammpstrj文件 
 
