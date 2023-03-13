@@ -39,3 +39,6 @@ lammps dumper文件读取与cluster分析
 计算周期性边界条件下的质心坐标已经回转半径rg
 ### dis_sq
 计算两个向量在周期性边界条件下的距离平方
+### def get_mol_cm_rg(s,l_box,num_chain,num_beads)
+寻找分子的cm与rg，返回np.array
+
