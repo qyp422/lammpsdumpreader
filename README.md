@@ -23,6 +23,4 @@ class Lammps_dumpreader 用来读取lammpstrj文件
 ### 可选参数 -o
 -o output_filename
 
-输出分析的轨迹，比如做过-bm -r 将会输出用作分析后的轨迹文件
-
-默认输出的文件名为‘new.lammpstrj’
+输出分析的轨迹，比如做过-bm -r 将会输出用作分析后的轨迹文件,新的轨迹文件名为output_filename。
