@@ -7,6 +7,10 @@ lammps dumper文件读取与cluster分析
 其次会根据Lammps_dumpreader的m_array参数设置默认值1.0或者自己根据原子类型设置mass。
 
 可选参数m_array若为float值则设置每个原子为固定的质量，若为dict或list需要确保m[typeid]为对应typeid的质量。默认值为1.0 ！
+
+使用了numpy轻量结构体储存数据
+
+eg. r._system['x']即为所有原子x坐标
 ## analysis.py
 用来执行分析脚本 请根据自己体系设置cut_off num_chain num_beads
 
