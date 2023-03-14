@@ -8,9 +8,9 @@ lammps dumper文件读取与cluster分析
 
 可选参数m_array若为float值则设置每个原子为固定的质量，若为dict或list需要确保m[typeid]为对应typeid的质量。默认值为1.0 ！
 ## analysis.py
-用来执行分析脚本
+用来执行分析脚本 请根据自己体系设置cut_off num_chain num_beads
 
-使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy -rg --c cm -cmb
+使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy -rg --c -mc -mcb -cv
 ### cluster方案 -yzs/-sy
 对应不同的体系找cluster方案，也可以后期diy
 
@@ -81,5 +81,5 @@ note只统计最大的cluster
 ### drop.txt
 timestep 平均cluster_rg cluster个数 cluster大小之和  
 ### cluster_volum.txt
-timestep 单聚体个数 2聚体个数 ……………… 10聚体个数 所有10聚体链条数综合
+timestep 单聚体个数 2聚体个数 ……………… 10聚体个数 所有10聚体链条数总和
 
