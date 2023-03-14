@@ -166,8 +166,8 @@ def cluster_sy(s,num_chain,num_beads,cut_off,l_box,type1,type2):
     for i in type1:
         for j in type2:
             dx = min(abs(s['x'][i] - s['x'][j]),l_box[0]-abs(s['x'][i] - s['x'][j]))
-            dy = min(abs(s['y'][i] - s['y'][j]),l_box[0]-abs(s['y'][i] - s['y'][j]))
-            dz = min(abs(s['z'][i] - s['z'][j]),l_box[0]-abs(s['z'][i] - s['z'][j]))
+            dy = min(abs(s['y'][i] - s['y'][j]),l_box[1]-abs(s['y'][i] - s['y'][j]))
+            dz = min(abs(s['z'][i] - s['z'][j]),l_box[2]-abs(s['z'][i] - s['z'][j]))
             if dx*dx + dy*dy + dz*dz <= cut_off*cut_off:
                 mol1 = i//num_beads
                 mol2 = j//num_beads
