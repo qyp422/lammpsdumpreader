@@ -10,7 +10,9 @@ lammps dumper文件读取与cluster分析
 ## analysis.py
 用来执行分析脚本
 
-使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename
+使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy
+### cluster方案 -yzs/-sy
+对应不同的体系找cluster方案，也可以后期diy
 
 ### 可选参数 -bm 
 将盒子质心移动至[0,0,0]，并没有移动粒子！若想粒子也平移请使用shift_pos[0,0,0]!
@@ -41,4 +43,9 @@ lammps dumper文件读取与cluster分析
 计算两个向量在周期性边界条件下的距离平方
 ### def get_mol_cm_rg(s,l_box,num_chain,num_beads)
 寻找分子的cm与rg，返回np.array
+
+## 输出文件 
+### bond_number.txt
+timestep 分子外成键数 分子内成键数 成键总数 未成键位点
+
 
