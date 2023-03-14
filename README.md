@@ -60,4 +60,7 @@ timestep 分子外成键数 分子内成键数 成键总数 未成键位点
 timestep 第一个分子rg 第二个分子rg …………
 ### max_cluster.txt
 timestep cluster大小 （组成的分子id-1）
+### max_cluster_bonds.txt
+timestep 分子外成键数 分子内成键数 成键总数 未成键位点
 
+note只统计最大的cluster
