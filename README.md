@@ -32,8 +32,7 @@ lammps dumper文件读取与cluster分析
 输出每个分子的rg 至文件名lammpstrj_filename_rg.txt中，格式见输出文件
 ### 可选参数 -c
 输出体系所有非单体cluster 至文件名cluster.txt中，格式见输出文件
-### 可选参数 -d
-输出-c中的cluster统计结果至文件名drop.txt中，格式见输出文件
+输出-c中的cluster.txt统计结果至文件名drop.txt中，格式见输出文件
 ### 可选参数 -mc
 输出体系最大的cluster 至文件名max_cluster.txt中，格式见输出文件
 
