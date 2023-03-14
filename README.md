@@ -14,7 +14,7 @@ eg. r._system['x']即为所有原子x坐标
 ## analysis.py
 用来执行分析脚本 请根据自己体系设置cut_off num_chain num_beads
 
-使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy -rg --c -mc -mcb -cv
+使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy -rg -c -mc -mcb -cv
 ### cluster方案 -yzs/-sy
 对应不同的体系找cluster方案，也可以后期diy
 
