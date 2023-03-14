@@ -10,7 +10,7 @@ lammps dumper文件读取与cluster分析
 ## analysis.py
 用来执行分析脚本
 
-使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy
+使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy -rg
 ### cluster方案 -yzs/-sy
 对应不同的体系找cluster方案，也可以后期diy
 
@@ -27,6 +27,9 @@ lammps dumper文件读取与cluster分析
 若为2个参数即读取帧数为start帧到end(包括end) eg -r start end
 
 若为3个参数即读取帧数为start帧到end，每隔step读取一次(包括end) eg -r start end step
+
+### 可选参数 -rg 
+输出每个分子的rg 至文件名lammpstrj_filename_rg.txt中格式见输出文件
 
 ### 可选参数 -o
 -o output_filename
@@ -47,5 +50,6 @@ lammps dumper文件读取与cluster分析
 ## 输出文件 
 ### bond_number.txt
 timestep 分子外成键数 分子内成键数 成键总数 未成键位点
-
+### lammpstrj_filename_rg.txt
+timestep 第一个分子rg 第二个分子rg …………
 
