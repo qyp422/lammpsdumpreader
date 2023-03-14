@@ -3,13 +3,17 @@ Author: qyp422
 Date: 2023-03-13 16:03:49
 Email: qyp422@qq.com
 LastEditors: Please set LastEditors
-LastEditTime: 2023-03-13 21:17:18
+LastEditTime: 2023-03-14 14:24:25
 Description: 
 
 Copyright (c) 2023 by qyp422, All Rights Reserved. 
 '''
 import numpy as np
 from numba import njit,vectorize
+
+import logging
+numba_logger = logging.getLogger('numba')
+numba_logger.setLevel(logging.WARNING)
 #并查集
 class Quick_Find():
     def __init__(self, n):
@@ -62,10 +66,11 @@ class Quick_Find():
         keys = []
         for j in hash1:
             sort_id.append(j)
-            keys.append(len(hash1[j]))
+            keys.append(len(hash1[j]))        
         keys_sort =np.argsort(np.array(keys))
         result = [hash1[sort_id[x]] for x in keys_sort]
-        return result.reverse()
+        result.reverse()
+        return result
 
 
 
@@ -79,9 +84,11 @@ param {*} mass mass坐标np.array
 param {*} box_array
 return {*}
 '''
+
+
 @njit
-def cal_cm_rg(x,y,z,mass,l_box):
-    n = len(mass)
+def cal_cm_rg(x,y,z,l_box,mass):
+    n = len(x)
     cm0 = np.array([x[0],y[0],z[0]]) #幸运粒子
     cm = np.zeros(3,dtype=np.double)
     pos = np.zeros((n,3),dtype=np.double)
@@ -118,9 +125,62 @@ return {*}
 @njit
 def get_mol_cm_rg(s,l_box,num_chain,num_beads):
     cm = np.zeros((num_chain,3),dtype=np.double)
-    rg = np.zeros((num_chain,3),dtype=np.double)
+    rg = np.zeros((num_chain,),dtype=np.double)
     for j in range(num_chain):
-        cm[j],rg[j] = cal_cm_rg(s['x'][j*num_beads:j*num_beads+num_beads],s['y'][j*num_beads:j*num_beads+num_beads],s['z'][j*num_beads:j*num_beads+num_beads],s['mass'][j*num_beads:j*num_beads+num_beads],l_box)
+        cm[j],rg[j] = cal_cm_rg(s['x'][j*num_beads:j*num_beads+num_beads],s['y'][j*num_beads:j*num_beads+num_beads],s['z'][j*num_beads:j*num_beads+num_beads],l_box,s['mass'][j*num_beads:j*num_beads+num_beads])
     return cm,rg
 
+def find_cluster(pair,num_chain):
+    q = Quick_Find(num_chain)
+    for (i,j) in pair:
+        q.union(i,j)
+    cluster_list = q.hash_dict()
+    del q
+    return cluster_list
 
+
+def cluster_to_ids(mol_list,num_beads,start=0):
+    res = []
+    for i in mol_list:
+        res += list(range(start+i*num_beads,start+i*num_beads+num_beads))
+    return res
+
+
+@njit
+def cluster_ysz(cm,num_chain,cut_off,l_box):
+    pair = {}
+    for i in range(num_chain-1):
+            for j in range(i+1,num_chain):
+                dx = min(abs(cm[i][0] - cm[j][0]),l_box[0]-abs(cm[i][0] - cm[j][0]))
+                dy = min(abs(cm[i][1] - cm[j][1]),l_box[1]-abs(cm[i][1] - cm[j][1]))
+                dz = min(abs(cm[i][2] - cm[j][2]),l_box[2]-abs(cm[i][2] - cm[j][2]))
+                if dx*dx + dy*dy + dz*dz <= cut_off*cut_off:
+                    pair[(i,j)] = 1
+    return pair
+
+@njit
+def cluster_sy(s,num_chain,num_beads,cut_off,l_box,type1,type2):
+    pair = {}
+    intrapair = np.array([0 for _ in range(num_chain)])
+    outerpair = 0
+    for i in type1:
+        for j in type2:
+            dx = min(abs(s['x'][i] - s['x'][j]),l_box[0]-abs(s['x'][i] - s['x'][j]))
+            dy = min(abs(s['y'][i] - s['y'][j]),l_box[0]-abs(s['y'][i] - s['y'][j]))
+            dz = min(abs(s['z'][i] - s['z'][j]),l_box[0]-abs(s['z'][i] - s['z'][j]))
+            if dx*dx + dy*dy + dz*dz <= cut_off*cut_off:
+                mol1 = i//num_beads
+                mol2 = j//num_beads
+                if mol1 == mol2:
+                    intrapair[mol1] += 1
+                else: 
+                    if mol1 > mol2:
+                        mol1,mol2 = mol2,mol1
+                    if (mol1,mol2) in pair:
+                        pair[(mol1,mol2)] += 1
+                    else:
+                        pair[(mol1,mol2)] = 1
+                    outerpair += 1
+            break
+
+    return pair,intrapair,outerpair
