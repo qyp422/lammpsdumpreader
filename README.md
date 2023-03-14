@@ -81,5 +81,5 @@ note只统计最大的cluster
 ### drop.txt
 timestep 平均cluster_rg cluster个数 cluster大小之和  
 ### cluster_volum.txt
-timestep 单聚体个数 2聚体个数 ……………… 10聚体个数 所有10聚体链条数总和
+timestep 单聚体个数 2聚体个数 ……………… 9聚体个数 超过9聚体个数 所有超过9聚体链条数总和
 
