@@ -10,7 +10,7 @@ lammps dumper文件读取与cluster分析
 ## analysis.py
 用来执行分析脚本
 
-使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy -rg -cm -cmd
+使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy -rg -cm -cmb
 ### cluster方案 -yzs/-sy
 对应不同的体系找cluster方案，也可以后期diy
 
@@ -33,7 +33,7 @@ lammps dumper文件读取与cluster分析
 ### 可选参数 -mc
 输出体系最大的cluster 至文件名max_cluster.txt中，格式见输出文件
 
-### 可选参数 -mcd
+### 可选参数 -mcb
 输出体系最大的cluster的成键信息，至文件名max_cluster_bonds.txt中，格式见输出文件
 
 注意必须在-sy体系下
