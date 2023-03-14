@@ -10,7 +10,7 @@ lammps dumper文件读取与cluster分析
 ## analysis.py
 用来执行分析脚本
 
-使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy -rg
+使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy -rg -cm -cmd
 ### cluster方案 -yzs/-sy
 对应不同的体系找cluster方案，也可以后期diy
 
