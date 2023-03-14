@@ -154,7 +154,7 @@ def main():
         # reader condition
         
         condition = True  if (not args.read) or ((frame_strat<= r.frame_num <=frame_end) and ((r.frame_num - frame_strat) % frame_step == 0)) else False
-
+        if args.read and (r.frame_num > frame_end) : break
     del r
     end=datetime.datetime.now()
     print(f'start at {start}')
