@@ -10,7 +10,7 @@ lammps dumper文件读取与cluster分析
 ## analysis.py
 用来执行分析脚本
 
-使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy -rg -cm -cmb
+使用方法为 python analysis.py lammpstrj_filename -bm -cm -r start end step -o output_filename -yzs/-sy -rg --c cm -cmb
 ### cluster方案 -yzs/-sy
 对应不同的体系找cluster方案，也可以后期diy
 
@@ -30,6 +30,9 @@ lammps dumper文件读取与cluster分析
 
 ### 可选参数 -rg 
 输出每个分子的rg 至文件名lammpstrj_filename_rg.txt中，格式见输出文件
+### 可选参数 -c
+输出体系所有非单体cluster 至文件名cluster.txt中，格式见输出文件
+
 ### 可选参数 -mc
 输出体系最大的cluster 至文件名max_cluster.txt中，格式见输出文件
 
@@ -58,6 +61,16 @@ lammps dumper文件读取与cluster分析
 timestep 分子外成键数 分子内成键数 成键总数 未成键位点
 ### lammpstrj_filename_rg.txt
 timestep 第一个分子rg 第二个分子rg …………
+### cluster.txt
+timestep = timestep
+
+cluster1_rg cluster1大小 （cluster1组成的分子id-1）
+
+cluster2_rg cluster2大小 （cluster2组成的分子id-1）
+
+cluster3_rg cluster3大小 （cluster3组成的分子id-1）
+
+按照cluster大小从大到小排列
 ### max_cluster.txt
 timestep cluster大小 （组成的分子id-1）
 ### max_cluster_bonds.txt
