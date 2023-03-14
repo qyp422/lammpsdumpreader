@@ -35,7 +35,8 @@ lammps dumper文件读取与cluster分析
 输出-c中的cluster.txt统计结果至文件名drop.txt中，格式见输出文件
 ### 可选参数 -mc
 输出体系最大的cluster 至文件名max_cluster.txt中，格式见输出文件
-
+### 可选参数 -cv
+统计每个cluster大小zise从1-9，>=10至文件名cluster_volum.txt中，格式见输出文件
 ### 可选参数 -mcb
 输出体系最大的cluster的成键信息，至文件名max_cluster_bonds.txt中，格式见输出文件
 
@@ -79,3 +80,6 @@ timestep 分子外成键数 分子内成键数 成键总数 未成键位点
 note只统计最大的cluster
 ### drop.txt
 timestep 平均cluster_rg cluster个数 cluster大小之和  
+### cluster_volum.txt
+timestep 单聚体个数 2聚体个数 ……………… 10聚体个数 所有10聚体链条数综合
+
