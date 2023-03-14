@@ -29,8 +29,14 @@ lammps dumper文件读取与cluster分析
 若为3个参数即读取帧数为start帧到end，每隔step读取一次(包括end) eg -r start end step
 
 ### 可选参数 -rg 
-输出每个分子的rg 至文件名lammpstrj_filename_rg.txt中格式见输出文件
+输出每个分子的rg 至文件名lammpstrj_filename_rg.txt中，格式见输出文件
+### 可选参数 -mc
+输出体系最大的cluster 至文件名max_cluster.txt中，格式见输出文件
 
+### 可选参数 -mcd
+输出体系最大的cluster的成键信息，至文件名max_cluster_bonds.txt中，格式见输出文件
+
+注意必须在-sy体系下
 ### 可选参数 -o
 -o output_filename
 
@@ -52,4 +58,6 @@ lammps dumper文件读取与cluster分析
 timestep 分子外成键数 分子内成键数 成键总数 未成键位点
 ### lammpstrj_filename_rg.txt
 timestep 第一个分子rg 第二个分子rg …………
+### max_cluster.txt
+timestep cluster大小 （组成的分子id-1）
 
