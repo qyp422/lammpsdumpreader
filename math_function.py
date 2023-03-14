@@ -150,12 +150,12 @@ def cluster_to_ids(mol_list,num_beads,start=0):
 def cluster_ysz(cm,num_chain,cut_off,l_box):
     pair = {}
     for i in range(num_chain-1):
-            for j in range(i+1,num_chain):
-                dx = min(abs(cm[i][0] - cm[j][0]),l_box[0]-abs(cm[i][0] - cm[j][0]))
-                dy = min(abs(cm[i][1] - cm[j][1]),l_box[1]-abs(cm[i][1] - cm[j][1]))
-                dz = min(abs(cm[i][2] - cm[j][2]),l_box[2]-abs(cm[i][2] - cm[j][2]))
-                if dx*dx + dy*dy + dz*dz <= cut_off*cut_off:
-                    pair[(i,j)] = 1
+        for j in range(i+1,num_chain):
+            dx = min(abs(cm[i][0] - cm[j][0]),l_box[0]-abs(cm[i][0] - cm[j][0]))
+            dy = min(abs(cm[i][1] - cm[j][1]),l_box[1]-abs(cm[i][1] - cm[j][1]))
+            dz = min(abs(cm[i][2] - cm[j][2]),l_box[2]-abs(cm[i][2] - cm[j][2]))
+            if dx*dx + dy*dy + dz*dz <= cut_off*cut_off:
+                pair[(i,j)] = 1
     return pair
 
 @njit
