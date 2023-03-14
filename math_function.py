@@ -181,6 +181,6 @@ def cluster_sy(s,num_chain,num_beads,cut_off,l_box,type1,type2):
                     else:
                         pair[(mol1,mol2)] = 1
                     outerpair += 1
-            break
+                break
 
     return pair,intrapair,outerpair
