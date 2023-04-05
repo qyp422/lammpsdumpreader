@@ -1,5 +1,7 @@
 # lammpsdumpreader
 lammps dumper文件读取与cluster分析
+
+please cite [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7802333.svg)](https://doi.org/10.5281/zenodo.7802333)
 ## dumpreader.py 
 ### class Lammps_dumpreader 用来读取lammpstrj文件 
 
